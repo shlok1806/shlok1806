@@ -4,6 +4,10 @@
 
 <br>
 
+<img src="vinyl-spin.svg" width="200" height="200" alt="spinning vinyl"/>
+
+<br>
+
 # SHLOK<br>THAKKAR
 
 <sub>CS + ECONOMICS &nbsp;•&nbsp; STATISTICS MINOR &nbsp;•&nbsp; UIUC &nbsp;•&nbsp; CHAMPAIGN, IL</sub>
@@ -24,7 +28,7 @@
 
 ---
 
-<sub>▸ &nbsp; NOW PLAYING &nbsp; • &nbsp; PERSONAL BUILDS & SYSTEMS &nbsp; • &nbsp; PLAYING 6 TRACKS</sub>
+<img src="waveform.svg" width="72" height="24" alt="now playing"/> &nbsp; <sub>NOW PLAYING &nbsp;•&nbsp; PERSONAL BUILDS & SYSTEMS &nbsp;•&nbsp; PLAYING 6 TRACKS</sub>
 
 ### PROJECTS &nbsp; `ST-001`
 
@@ -76,7 +80,7 @@
 
 ---
 
-<sub>▸ &nbsp; NOW PLAYING &nbsp; • &nbsp; WORK & RESEARCH &nbsp; • &nbsp; PLAYING 3 TRACKS</sub>
+<img src="waveform.svg" width="72" height="24" alt="now playing"/> &nbsp; <sub>NOW PLAYING &nbsp;•&nbsp; WORK & RESEARCH &nbsp;•&nbsp; PLAYING 3 TRACKS</sub>
 
 ### EXPERIENCE &nbsp; `ST-002`
 
@@ -146,6 +150,6 @@
 
 <br>
 
-<sub>◈ &nbsp; SHLOK THAKKAR &nbsp; • &nbsp; ST ARCHIVE &nbsp; • &nbsp; CATALOG 0001 &nbsp; • &nbsp; v2025 &nbsp; ◈</sub>
+<sub>◈ &nbsp; SHLOK THAKKAR &nbsp; • &nbsp; ST ARCHIVE &nbsp; • &nbsp; CATALOG 0001 &nbsp; • &nbsp; v2026 &nbsp; ◈</sub>
 
 </div>

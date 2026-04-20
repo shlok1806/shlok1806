@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="220" height="220">
+  <defs>
+    <radialGradient id="vinylBody" cx="42%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#2e2e2e"/>
+      <stop offset="35%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#181818"/>
+    </radialGradient>
+    <radialGradient id="labelGrad" cx="38%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#ff5a66"/>
+      <stop offset="100%" stop-color="#b02030"/>
+    </radialGradient>
+    <radialGradient id="sheen" cx="30%" cy="25%" r="55%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.07"/>
+      <stop offset="70%" stop-color="white" stop-opacity="0.01"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .record {
+      animation: spin 4s linear infinite;
+      transform-origin: 150px 150px;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+  </style>
+
+  <g class="record">
+    <!-- Outer edge -->
+    <circle cx="150" cy="150" r="148" fill="#0a0a0a" stroke="#2a2a2a" stroke-width="1.5"/>
+    <!-- Vinyl body -->
+    <circle cx="150" cy="150" r="145" fill="url(#vinylBody)"/>
+
+    <!-- Groove rings — dense outer playing area -->
+    <circle cx="150" cy="150" r="143" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="140" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="137" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="134" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="131" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="128" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="125" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="122" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="119" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="116" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="113" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="110" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="107" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="104" fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="101" fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="98"  fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="95"  fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="92"  fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="89"  fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="86"  fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="83"  fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="80"  fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="77"  fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="74"  fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+    <circle cx="150" cy="150" r="71"  fill="none" stroke="#262626" stroke-width="0.6"/>
+    <circle cx="150" cy="150" r="68"  fill="none" stroke="#1e1e1e" stroke-width="0.4"/>
+
+    <!-- Lead-in gap before label -->
+    <circle cx="150" cy="150" r="63" fill="#0d0d0d"/>
+
+    <!-- Center label -->
+    <circle cx="150" cy="150" r="60" fill="url(#labelGrad)"/>
+    <!-- Label inner ring detail -->
+    <circle cx="150" cy="150" r="57" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+    <circle cx="150" cy="150" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+    <!-- Label text -->
+    <text x="150" y="139" text-anchor="middle"
+          font-family="'Courier New', Courier, monospace"
+          font-size="15" font-weight="bold" letter-spacing="5"
+          fill="white" filter="url(#glow)">SHLOK</text>
+    <text x="150" y="154" text-anchor="middle"
+          font-family="'Courier New', Courier, monospace"
+          font-size="8.5" letter-spacing="3.5"
+          fill="rgba(255,255,255,0.75)">THAKKAR</text>
+    <line x1="118" y1="161" x2="182" y2="161" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+    <text x="150" y="171" text-anchor="middle"
+          font-family="'Courier New', Courier, monospace"
+          font-size="6.5" letter-spacing="1.5"
+          fill="rgba(255,255,255,0.5)">ST-001  ◆  33⅓ RPM</text>
+    <text x="150" y="181" text-anchor="middle"
+          font-family="'Courier New', Courier, monospace"
+          font-size="5.5" letter-spacing="1"
+          fill="rgba(255,255,255,0.35)">UIUC · CS + ECON</text>
+
+    <!-- Spindle hole -->
+    <circle cx="150" cy="150" r="5" fill="#0d0d0d" stroke="#1a1a1a" stroke-width="0.5"/>
+    <circle cx="150" cy="150" r="2.5" fill="#2a2a2a"/>
+
+    <!-- Sheen / light reflection -->
+    <circle cx="150" cy="150" r="145" fill="url(#sheen)"/>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 28" width="80" height="28">
+  <!-- Bar 1 -->
+  <rect x="2" y="4" width="9" height="20" rx="2" fill="#E63946">
+    <animate attributeName="height" values="4;20;8;16;4"  dur="1.2s" repeatCount="indefinite"/>
+    <animate attributeName="y"      values="20;4;16;8;20" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Bar 2 -->
+  <rect x="15" y="8" width="9" height="16" rx="2" fill="#E63946">
+    <animate attributeName="height" values="16;6;22;10;16"  dur="0.9s" repeatCount="indefinite"/>
+    <animate attributeName="y"      values="8;18;2;14;8"    dur="0.9s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Bar 3 -->
+  <rect x="28" y="2" width="9" height="24" rx="2" fill="#E63946">
+    <animate attributeName="height" values="24;10;20;6;24"  dur="1.4s" repeatCount="indefinite"/>
+    <animate attributeName="y"      values="2;16;6;20;2"    dur="1.4s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Bar 4 -->
+  <rect x="41" y="6" width="9" height="18" rx="2" fill="#E63946">
+    <animate attributeName="height" values="18;24;8;20;18"  dur="1.0s" repeatCount="indefinite"/>
+    <animate attributeName="y"      values="6;0;16;4;6"     dur="1.0s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Bar 5 -->
+  <rect x="54" y="10" width="9" height="12" rx="2" fill="#E63946">
+    <animate attributeName="height" values="12;22;4;18;12"  dur="1.3s" repeatCount="indefinite"/>
+    <animate attributeName="y"      values="10;2;20;6;10"   dur="1.3s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Bar 6 -->
+  <rect x="67" y="4" width="9" height="20" rx="2" fill="#E63946">
+    <animate attributeName="height" values="20;8;24;6;20"   dur="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="y"      values="4;16;0;18;4"    dur="0.8s" repeatCount="indefinite"/>
+  </rect>
+</svg>
