@@ -18,7 +18,7 @@
 
 <br>
 
-[![PORTFOLIO](https://img.shields.io/badge/PORTFOLIO-E63946?style=for-the-badge&logoColor=white)](https://shlok-portfolio-opal.vercel.app)&nbsp;
+[![PORTFOLIO](https://img.shields.io/badge/PORTFOLIO-E63946?style=for-the-badge&logoColor=white)](https://shlokthakkar.com)&nbsp;
 [![LINKEDIN](https://img.shields.io/badge/LINKEDIN-0A0A0A?style=for-the-badge&logo=linkedin&logoColor=E63946)](https://linkedin.com/in/shlok-thakkar)&nbsp;
 [![GITHUB](https://img.shields.io/badge/GITHUB-0A0A0A?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shlok1806)
 
