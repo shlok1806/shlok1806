@@ -49,9 +49,9 @@
 <br>
 
 **`03`** &nbsp; [**WHOOP-LOCAL**](https://github.com/shlok1806/whoop-local) &nbsp; ![HARDWARE](https://img.shields.io/badge/HARDWARE-06B6D4?style=flat-square)
-> Local-first WHOOP 5.0 client — reverse-engineered the band's GATT profile to read live heart rate and backfill flash history straight over Bluetooth LE, with no phone and no cloud in the loop
+> Local-first WHOOP 5.0 client — enumerates the band's full GATT profile over Bluetooth LE to map every service and characteristic, laying the groundwork for phone-free, cloud-free reads &nbsp;•&nbsp; Phase 0 complete, decode in progress
 >
-> `Python` &nbsp; `Bluetooth LE` &nbsp; `Protocol Reverse Engineering` &nbsp; `bleak`
+> `Python` &nbsp; `Bluetooth LE` &nbsp; `GATT` &nbsp; `bleak`
 
 <br>
 
