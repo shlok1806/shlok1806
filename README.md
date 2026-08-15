@@ -28,7 +28,7 @@
 
 ---
 
-<img src="waveform.svg" width="72" height="24" alt="now playing"/> &nbsp; <sub>NOW PLAYING &nbsp;•&nbsp; PERSONAL BUILDS & SYSTEMS &nbsp;•&nbsp; PLAYING 6 TRACKS</sub>
+<img src="waveform.svg" width="72" height="24" alt="now playing"/> &nbsp; <sub>NOW PLAYING &nbsp;•&nbsp; PERSONAL BUILDS & SYSTEMS &nbsp;•&nbsp; PLAYING 8 TRACKS</sub>
 
 ### PROJECTS &nbsp; `ST-001`
 
@@ -48,24 +48,24 @@
 
 <br>
 
-**`03`** &nbsp; [**SCROLL ROYALE**](https://github.com/shlok1806/ScrollClash) &nbsp; ![HACKILLINOIS](https://img.shields.io/badge/HACKILLINOIS-EC4899?style=flat-square)
-> 1v1 real-time iOS multiplayer game — SwiftUI + Combine, Supabase Postgres RPC, live leaderboard, and TTL match cache &nbsp;•&nbsp; Built at HackIllinois
+**`03`** &nbsp; [**WHOOP-LOCAL**](https://github.com/shlok1806/whoop-local) &nbsp; ![HARDWARE](https://img.shields.io/badge/HARDWARE-06B6D4?style=flat-square)
+> Local-first WHOOP 5.0 client — reverse-engineered the band's GATT profile to read live heart rate and backfill flash history straight over Bluetooth LE, with no phone and no cloud in the loop
 >
-> `SwiftUI` &nbsp; `Combine` &nbsp; `Supabase` &nbsp; `PostgreSQL`
+> `Python` &nbsp; `Bluetooth LE` &nbsp; `Protocol Reverse Engineering` &nbsp; `bleak`
 
 <br>
 
-**`04`** &nbsp; [**BLUEPRINT QA**](https://github.com/shlok1806/blueprint-qa) &nbsp; ![AI](https://img.shields.io/badge/AI-8B5CF6?style=flat-square)
-> AI quality assurance for construction & engineering PDFs — flags missing tags and dimension mismatches via a multi-stage OCR + Claude pipeline
+**`04`** &nbsp; [**CARTEL**](https://github.com/shlok1806/builders-cup) &nbsp; ![BUILDERS CUP](https://img.shields.io/badge/BUILDERS_CUP-EC4899?style=flat-square)
+> Shared-cart expense agent — describe a purchase in plain text, an LLM builds the cart, a deterministic engine splits it against each roommate's compiled policies, and flagged lines get approved live on the owner's phone before every card is charged
 >
-> `FastAPI` &nbsp; `Claude API` &nbsp; `OCR` &nbsp; `Azure Blob` &nbsp; `Docker`
+> `Next.js` &nbsp; `TypeScript` &nbsp; `Supabase` &nbsp; `Stripe` &nbsp; `PWA`
 
 <br>
 
-**`05`** &nbsp; [**FEELENS**](https://github.com/shlok1806/feelens) &nbsp; ![LIVE](https://img.shields.io/badge/LIVE-E63946?style=flat-square)
-> Stripe fee analytics — surfaces Amex premiums and international surcharges across payment flows
+**`05`** &nbsp; [**BLUEPRINT QA**](https://github.com/shlok1806/blueprint-qa) &nbsp; ![AI](https://img.shields.io/badge/AI-8B5CF6?style=flat-square)
+> AI quality assurance for construction & engineering PDFs — flags missing tags, dimension mismatches, and unlabeled elements via a multi-stage OCR + Claude pipeline
 >
-> `Next.js` &nbsp; `TypeScript` &nbsp; `Stripe`
+> `FastAPI` &nbsp; `Claude API` &nbsp; `SvelteKit` &nbsp; `PostgreSQL` &nbsp; `Docker`
 
 <br>
 
@@ -73,6 +73,20 @@
 > GitHub Action that runs Claude over pull requests to scan for leaked secrets and vulnerable dependencies
 >
 > `TypeScript` &nbsp; `GitHub Actions` &nbsp; `Claude API`
+
+<br>
+
+**`07`** &nbsp; [**SCROLL ROYALE**](https://github.com/shlok1806/ScrollClash) &nbsp; ![HACKILLINOIS](https://img.shields.io/badge/HACKILLINOIS-EC4899?style=flat-square)
+> 1v1 real-time iOS multiplayer game — SwiftUI + Combine, Supabase Postgres RPC, live leaderboard, and TTL match cache &nbsp;•&nbsp; Built at HackIllinois
+>
+> `SwiftUI` &nbsp; `Combine` &nbsp; `Supabase` &nbsp; `PostgreSQL`
+
+<br>
+
+**`08`** &nbsp; [**FEELENS**](https://github.com/shlok1806/feelens) &nbsp; ![LIVE](https://img.shields.io/badge/LIVE-E63946?style=flat-square)
+> Stripe fee analytics — surfaces Amex premiums and international surcharges across payment flows
+>
+> `Next.js` &nbsp; `TypeScript` &nbsp; `Stripe`
 
 <br>
 
@@ -127,6 +141,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-E63946?style=flat-square&logo=typescript&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-E63946?style=flat-square&logo=go&logoColor=white)
 ![C++](https://img.shields.io/badge/C++-E63946?style=flat-square&logo=c%2B%2B&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift-E63946?style=flat-square&logo=swift&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-E63946?style=flat-square&logo=openjdk&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-E63946?style=flat-square&logo=postgresql&logoColor=white)
 ![R](https://img.shields.io/badge/R-E63946?style=flat-square&logo=r&logoColor=white)
@@ -144,8 +159,10 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-2C2C2C?style=flat-square&logo=fastapi&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-2C2C2C?style=flat-square&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-2C2C2C?style=flat-square&logo=react&logoColor=white)
+![SvelteKit](https://img.shields.io/badge/SvelteKit-2C2C2C?style=flat-square&logo=svelte&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-2C2C2C?style=flat-square&logo=flask&logoColor=white)
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-2C2C2C?style=flat-square&logo=swift&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-2C2C2C?style=flat-square&logo=stripe&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2C2C2C?style=flat-square&logo=docker&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-2C2C2C?style=flat-square&logo=terraform&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-2C2C2C?style=flat-square&logo=amazonwebservices&logoColor=white)
