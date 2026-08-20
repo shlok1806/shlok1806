@@ -17,7 +17,7 @@
  * rect itself, so the two never touch the same property.
  *
  * Everything outside the well - the window chrome, the labels, the handheld
- * panel - is ours, in the Console palette the portfolio uses.
+ * panel - is ours, in the Motif preset the portfolio opens on.
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
@@ -38,11 +38,13 @@ const PIECE_GAP = 0.09;
 /** Beat between the last piece locking and snk's game beginning. */
 const SETTLE = 0.6;
 
-/* Ours, outside the well: the Console palette the rest of the profile wears. */
-const EDGE = "#37650a";
-const EDGE_IN = "#26400a";
-/** The interior stays snk's own canvas color; its palette was tuned on it. */
-const WELL_BG = "#0d1117";
+/* Ours, outside the board: the site's Motif preset, matching chrome.mjs. */
+const EDGE = "#7a7773";
+const EDGE_IN = "#d6d3ce";
+/** Motif draws documents on a white card, and the board is the document. */
+const WELL_BG = "#ffffff";
+/** The NEXT piece wears the ramp's third step, like the board's own cells. */
+const NEXT_PIECE = "#3a49a4";
 
 const PAD = 8;
 const LABEL_W = 26;
@@ -97,7 +99,7 @@ function nextBox(x, y, w, h) {
     plate(x, y, w, h) +
     `<text x="${x + w / 2}" y="${y + 14}" font-family="${MONO}" font-size="9" fill="${T.faint}" text-anchor="middle" letter-spacing="1">NEXT</text>` +
     shape
-      .map(([sx, sy]) => `<rect x="${cx + sx * u}" y="${cy + sy * u}" width="${u - 1}" height="${u - 1}" rx="1" fill="${T.accent}"/>`)
+      .map(([sx, sy]) => `<rect x="${cx + sx * u}" y="${cy + sy * u}" width="${u - 1}" height="${u - 1}" rx="1" fill="${NEXT_PIECE}"/>`)
       .join("")
   );
 }

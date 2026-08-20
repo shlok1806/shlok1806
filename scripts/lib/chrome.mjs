@@ -2,24 +2,25 @@
  * The window chrome the profile SVGs are drawn inside.
  *
  * These images sit under a README, not inside the site, so they cannot read the
- * app's CSS custom properties - the palette below is the Console preset
- * (globals.css `.tango`) resolved to hex, and the frame is the same twm window
- * Window.tsx draws: a bevel-out shell, an active titlebar, and a bevel-in well
- * for the content.
+ * app's CSS custom properties - the palette below is the Motif preset
+ * (globals.css `.motif`, the site's default) resolved to hex: navy primary on
+ * warm-grey chrome, white bevel highlights, the OSF/1 look. The frame is the
+ * same window Window.tsx draws: a bevel-out shell, an active titlebar, and a
+ * bevel-in well for the content.
  */
 
 export const T = {
-  desktop: "#1c1f20",
-  card: "#101314",
-  secondary: "#2e3436",
-  foreground: "#d3d7cf",
-  muted: "#a9aca6",
-  faint: "#959c98",
-  accent: "#4e9a06",
-  accentInk: "#58af06",
-  onAccent: "#0c0f0b",
-  bevelLight: "#555753",
-  bevelDark: "#141718",
+  desktop: "#4a6076",
+  card: "#d6d3ce",
+  secondary: "#d6d3ce",
+  foreground: "#1a1a1a",
+  muted: "#4a4a4a",
+  faint: "#5d5b58",
+  accent: "#000080",
+  accentInk: "#000080",
+  onAccent: "#ffffff",
+  bevelLight: "#ffffff",
+  bevelDark: "#6e6b66",
 };
 
 /** Space Mono is a webfont; an SVG behind GitHub's image proxy cannot load one. */
@@ -75,13 +76,6 @@ export function windowFrame({ width, contentHeight, title, body, defs = "", extr
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(title)}">
 <defs>
-<pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
-  <rect width="4" height="1" fill="#000" opacity="0.10"/>
-</pattern>
-<radialGradient id="vig" cx="50%" cy="50%" r="75%">
-  <stop offset="55%" stop-color="#000" stop-opacity="0"/>
-  <stop offset="100%" stop-color="#000" stop-opacity="0.25"/>
-</radialGradient>
 ${defs}
 </defs>
 <style>
@@ -102,8 +96,6 @@ ${bevel(PAD, wellY, wellW, contentHeight + PAD, T.bevelDark, T.bevelLight)}
 <rect x="${PAD + 2}" y="${wellY + 2}" width="${wellW - 4}" height="${contentHeight + PAD - 4}" fill="${T.card}"/>
 <svg x="${PAD + 2}" y="${wellY + 2}" width="${wellW - 4}" height="${contentHeight + PAD - 4}" overflow="hidden">
 ${body}
-<rect width="100%" height="100%" fill="url(#scan)" pointer-events="none"/>
-<rect width="100%" height="100%" fill="url(#vig)" pointer-events="none"/>
 </svg>
 </svg>`;
 }
