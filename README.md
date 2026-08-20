@@ -9,13 +9,12 @@ to build.
 <br>
 
 <!--
-  A year of contributions, dropped into the well one tetromino at a time.
-  Regenerated daily by .github/workflows/profile.yml - see scripts/.
+  A year of contributions, played as one cabinet: the board drops in as tetris,
+  then a snake eats it. Drawn to match Platane/snk, which is where the snake
+  comes from. Regenerated daily by .github/workflows/profile.yml - see scripts/.
 -->
 
-![my last year of contributions, played as a game of tetris](https://raw.githubusercontent.com/shlok1806/shlok1806/output/contrib-tetris.svg)
-
-![the same year of contributions, eaten by a snake](https://raw.githubusercontent.com/shlok1806/shlok1806/output/snake.svg)
+![my last year of contributions, dropped in as tetris and then eaten by a snake](https://raw.githubusercontent.com/shlok1806/shlok1806/output/contributions.svg)
 
 <br>
 
