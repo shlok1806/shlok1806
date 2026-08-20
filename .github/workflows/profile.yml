@@ -27,16 +27,17 @@ jobs:
         with:
           node-version: 20
 
-      # The snake is snk's own, unmodified. Its path is a solved one and an
-      # imitation of it reads as an imitation, so this uses the real action and
-      # one of its own presets rather than colours of ours.
+      # The snake, its board and its palette are snk's own, on its stock
+      # github-dark preset with no colours of ours. It lands outside dist/ so
+      # only the finished composite is published.
       - name: the snake, by Platane/snk
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: dist/snake.svg?palette=github-dark
+          outputs: raw/snake.svg?palette=github-dark
 
-      - name: the contribution board
+      # Splices our tetris opening into snk's loop and wraps it in our chrome.
+      - name: the cabinet
         run: node scripts/contributions.mjs
         env:
           GH_USER: ${{ github.repository_owner }}
