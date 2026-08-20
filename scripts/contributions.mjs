@@ -26,8 +26,8 @@ const CELL = 12;
 const PITCH = 16;
 const RX = 2;
 
-/* snk's github-dark palette. */
-const RAMP = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
+/* snk's github-dark palette, taken from the snake it publishes next to this. */
+const RAMP = ["#161b22", "#01311f", "#034525", "#0f6d31", "#00c647"];
 /** The hairline snk draws around every square. */
 const CELL_EDGE = "#1b1f230a";
 
@@ -35,7 +35,7 @@ const CELL_EDGE = "#1b1f230a";
 const WELL_BG = "#0d1117";
 const EDGE = "#30363d";
 const EDGE_IN = "#21262d";
-const HUD_INK = "#39d353";
+const HUD_INK = "#00c647";
 
 /** snk publishes at 880; matching it means GitHub renders this unscaled. */
 const WIDTH = 880;
