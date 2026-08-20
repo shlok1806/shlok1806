@@ -8,12 +8,15 @@
  *
  * A piece enters above the well and descends one row at a time at a fixed rate,
  * the way a tetromino actually falls - a steps() drop, not a glide - then
- * flashes as it locks. Beside the well is the stat panel every handheld tetris
+ * flashes as it locks. Everything in flight is clipped to the well, so a piece
+ * is out of sight until it drops in under the lip rather than hanging above the
+ * board waiting its turn. Beside the well is the stat panel every handheld tetris
  * has: score, lines, level, and the next piece.
  */
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { T, MONO, esc, windowFrame } from "./lib/chrome.mjs";
+import { RAMP, LEVELS, MONTHS, fetchCalendar } from "./lib/calendar.mjs";
 
 const USER = process.env.GH_USER || "shlok1806";
 const OUT = process.env.OUT || "dist/contrib-tetris.svg";
@@ -36,20 +39,10 @@ const LEAD = 2;
 /** Seconds a piece takes to fall a single row. Constant, like real gravity. */
 const STEP = 0.055;
 
-/** NONE through FOURTH_QUARTILE, the Console preset's green ramp. */
-const RAMP = ["#171c14", "#26400a", "#37650a", "#4e9a06", "#79d21a"];
 const WELL_BG = "#0d100c";
 const EDGE = "#37650a";
 const EDGE_IN = "#26400a";
 
-const LEVELS = {
-  NONE: 0,
-  FIRST_QUARTILE: 1,
-  SECOND_QUARTILE: 2,
-  THIRD_QUARTILE: 3,
-  FOURTH_QUARTILE: 4,
-};
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 /** Deterministic, so a rerun with unchanged data produces an unchanged file. */
 function mulberry32(seed) {
@@ -62,28 +55,6 @@ function mulberry32(seed) {
   };
 }
 
-async function fetchCalendar() {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error("GITHUB_TOKEN is required for the contributions GraphQL API");
-
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      "User-Agent": `${USER}-profile-readme`,
-    },
-    body: JSON.stringify({
-      query: `query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{
-        totalContributions weeks{contributionDays{date contributionCount contributionLevel weekday}}}}}}`,
-      variables: { login: USER },
-    }),
-  });
-  if (!res.ok) throw new Error(`graphql ${res.status} ${await res.text()}`);
-  const json = await res.json();
-  if (json.errors) throw new Error(JSON.stringify(json.errors));
-  return json.data.user.contributionsCollection.contributionCalendar;
-}
 
 /**
  * Cut one week's contribution days into bottom-up pieces of one to four cells.
@@ -262,13 +233,18 @@ function render(cal) {
 
   const settle = (maxDelay + 0.25).toFixed(2);
 
+  /* The playfield: nothing in flight is visible outside it. */
+  const clip =
+    `<clipPath id="well"><rect x="${wellX + 4}" y="${wellY + 4}" width="${wellW - 8}" height="${wellH - 8}"/></clipPath>`;
+
   return windowFrame({
     width: WIDTH,
     contentHeight,
+    defs: clip,
     title: `${USER}@github: ~/contributions.tetris`,
     body:
       `${plate(wellX, wellY, wellW, wellH)}\n` +
-      `<g>${well.join("")}</g>\n${pieces.join("\n")}\n` +
+      `<g>${well.join("")}</g>\n<g clip-path="url(#well)">${pieces.join("\n")}</g>\n` +
       `<g class="chrome" style="animation-delay:${settle}s">${hud}${monthLabels.join("")}${dayLabels.join("")}</g>`,
     extraStyle: `
   @keyframes fall {
@@ -284,7 +260,7 @@ function render(cal) {
   });
 }
 
-const cal = await fetchCalendar();
+const cal = await fetchCalendar(USER);
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, render(cal));
 const s = stats(cal);

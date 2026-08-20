@@ -1,7 +1,8 @@
 ## hi, i'm shlok
 
-i'm a developer. mostly backend and distributed systems - LLM infrastructure,
-low-latency engines, and things that are more fun to build than to explain.
+i'm a developer, based in **champaign, illinois**. mostly backend and distributed
+systems - LLM infrastructure, low-latency engines, and things that are more fun
+to build than to explain.
 
 ### everything i've made lives here → **[shlokthakkar.com](https://shlokthakkar.com)**
 
