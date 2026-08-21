@@ -35,6 +35,14 @@ export const chars = (n, size) => n * size * CH;
 const TITLEBAR = 25;
 const PAD = 5;
 
+const BASE_STYLE = `  text { font-kerning: none; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+  }`;
+
+/** The content viewport windowFrame hands a body, given the window's width. */
+export const viewWidth = (width) => width - PAD * 2 - 4;
+
 export function esc(s) {
   return String(s).replace(
     /[&<>"']/g,
@@ -79,10 +87,7 @@ export function windowFrame({ width, contentHeight, title, body, defs = "", extr
 ${defs}
 </defs>
 <style>
-  text { font-kerning: none; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; }
-  }
+${BASE_STYLE}
 ${extraStyle}
 </style>
 <rect width="${width}" height="${height}" fill="${T.secondary}"/>
@@ -97,5 +102,34 @@ ${bevel(PAD, wellY, wellW, contentHeight + PAD, T.bevelDark, T.bevelLight)}
 <svg x="${PAD + 2}" y="${wellY + 2}" width="${wellW - 4}" height="${contentHeight + PAD - 4}" overflow="hidden">
 ${body}
 </svg>
+</svg>`;
+}
+
+/**
+ * The same content with no window around it, sized to the content viewport.
+ *
+ * For surfaces that draw their own chrome - the portfolio's window manager
+ * already gives this a title bar it can drag and a corner it can resize, and
+ * nesting our painted frame inside a real one reads as a window in a window.
+ * Body coordinates are identical either way, so a caller swaps one for the
+ * other without touching its layout.
+ *
+ * Deliberately no background: the host paints it. The portfolio repaints its
+ * window surfaces per desktop preset, and a fixed fill here would show as a
+ * patch of the wrong grey on three of the four.
+ */
+export function bareFrame({ width, contentHeight, label, body, defs = "", extraStyle = "" }) {
+  const w = viewWidth(width);
+  const h = contentHeight + PAD - 4;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
+<defs>
+${defs}
+</defs>
+<style>
+${BASE_STYLE}
+${extraStyle}
+</style>
+${body}
 </svg>`;
 }

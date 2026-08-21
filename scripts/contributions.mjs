@@ -21,12 +21,14 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-import { T, MONO, esc, windowFrame } from "./lib/chrome.mjs";
+import { T, MONO, esc, windowFrame, bareFrame } from "./lib/chrome.mjs";
 import { fetchCalendar, monthMarks } from "./lib/calendar.mjs";
 
 const USER = process.env.GH_USER || "shlok1806";
 const SNK_IN = process.env.SNK_IN || "raw/snake.svg";
 const OUT = process.env.OUT || "dist/contributions.svg";
+/** The same cabinet with no painted window, for surfaces that draw their own. */
+const BARE_OUT = process.env.BARE_OUT || "dist/contributions-bare.svg";
 
 /* The tetris opening. */
 /** Rows above the top of snk's canvas a piece is held, so it starts unseen. */
@@ -255,15 +257,14 @@ const board =
   `<svg x="${wellX + INSET}" y="${wellY + INSET}" width="${vw}" height="${vh}" viewBox="${vx} ${vy} ${vw} ${vh}">` +
   `<style>${style}\n${dropCss.join("\n")}</style>${body}</svg>`;
 
-const out = windowFrame({
-  width: WIDTH,
-  contentHeight,
-  title: `${USER}@github: ~/contributions`,
-  body: `${plate(wellX, wellY, wellW, wellH)}\n${board}\n${months}${dayLabels}${hud}`,
-});
+const content = `${plate(wellX, wellY, wellW, wellH)}\n${board}\n${months}${dayLabels}${hud}`;
+const label = `${USER}@github: ~/contributions`;
 
 mkdirSync(dirname(OUT), { recursive: true });
-writeFileSync(OUT, out);
+writeFileSync(OUT, windowFrame({ width: WIDTH, contentHeight, title: label, body: content }));
+mkdirSync(dirname(BARE_OUT), { recursive: true });
+writeFileSync(BARE_OUT, bareFrame({ width: WIDTH, contentHeight, label, body: content }));
+
 console.log(
-  `${OUT} - ${animated.length} cells in ${pieces.length} pieces, intro ${intro.toFixed(2)}s, cycle ${(D / 1000).toFixed(1)}s (snk ${cycle}ms)`,
+  `${OUT} + ${BARE_OUT} - ${animated.length} cells in ${pieces.length} pieces, intro ${intro.toFixed(2)}s, cycle ${(D / 1000).toFixed(1)}s (snk ${cycle}ms)`,
 );
