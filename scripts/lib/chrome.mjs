@@ -2,26 +2,16 @@
  * The window chrome the profile SVGs are drawn inside.
  *
  * These images sit under a README, not inside the site, so they cannot read the
- * app's CSS custom properties - the palette below is the Motif preset
- * (globals.css `.motif`, the site's default) resolved to hex: navy primary on
- * warm-grey chrome, white bevel highlights, the OSF/1 look. The frame is the
+ * app's CSS custom properties - the palettes live resolved to hex in
+ * presets.mjs, and a caller passes the one it wants as `T`. The frame is the
  * same window Window.tsx draws: a bevel-out shell, an active titlebar, and a
  * bevel-in well for the content.
  */
 
-export const T = {
-  desktop: "#4a6076",
-  card: "#d6d3ce",
-  secondary: "#d6d3ce",
-  foreground: "#1a1a1a",
-  muted: "#4a4a4a",
-  faint: "#5d5b58",
-  accent: "#000080",
-  accentInk: "#000080",
-  onAccent: "#ffffff",
-  bevelLight: "#ffffff",
-  bevelDark: "#6e6b66",
-};
+import { PRESETS } from "./presets.mjs";
+
+/** The default set, for callers that do not name a preset. */
+export const T = PRESETS[0].chrome;
 
 /** Space Mono is a webfont; an SVG behind GitHub's image proxy cannot load one. */
 export const MONO =
@@ -64,7 +54,7 @@ function bevel(x, y, w, h, light, dark) {
   );
 }
 
-function button(x, y, glyph, dy = 0) {
+function button(x, y, glyph, dy, T) {
   return (
     `<g>${bevel(x, y, 17, 17, T.bevelLight, T.bevelDark)}` +
     `<rect x="${x + 2}" y="${y + 2}" width="13" height="13" fill="${T.secondary}"/>` +
@@ -76,7 +66,7 @@ function button(x, y, glyph, dy = 0) {
  * Wrap `body` in the window. `body` is drawn with the content well's top-left
  * as its origin, so callers lay out from (0,0) and ignore the frame.
  */
-export function windowFrame({ width, contentHeight, title, body, defs = "", extraStyle = "" }) {
+export function windowFrame({ width, contentHeight, title, body, theme = T, defs = "", extraStyle = "" }) {
   const height = TITLEBAR + contentHeight + PAD * 2 + 2;
   const wellY = TITLEBAR + PAD;
   const wellW = width - PAD * 2;
@@ -90,15 +80,15 @@ ${defs}
 ${BASE_STYLE}
 ${extraStyle}
 </style>
-<rect width="${width}" height="${height}" fill="${T.secondary}"/>
-${bevel(0, 0, width, height, T.bevelLight, T.bevelDark)}
-<rect x="${PAD - 3}" y="2" width="${width - (PAD - 3) * 2}" height="${TITLEBAR - 4}" fill="${T.accent}"/>
-<text x="${PAD + 2}" y="${TITLEBAR - 8}" font-family="${UI}" font-size="13" font-weight="bold" fill="${T.onAccent}">${esc(title)}</text>
-${button(width - 62, btnY, "_", 2)}
-${button(width - 42, btnY, "□")}
-${button(width - 22, btnY, "×", 1)}
-${bevel(PAD, wellY, wellW, contentHeight + PAD, T.bevelDark, T.bevelLight)}
-<rect x="${PAD + 2}" y="${wellY + 2}" width="${wellW - 4}" height="${contentHeight + PAD - 4}" fill="${T.card}"/>
+<rect width="${width}" height="${height}" fill="${theme.secondary}"/>
+${bevel(0, 0, width, height, theme.bevelLight, theme.bevelDark)}
+<rect x="${PAD - 3}" y="2" width="${width - (PAD - 3) * 2}" height="${TITLEBAR - 4}" fill="${theme.accent}"/>
+<text x="${PAD + 2}" y="${TITLEBAR - 8}" font-family="${UI}" font-size="13" font-weight="bold" fill="${theme.onAccent}">${esc(title)}</text>
+${button(width - 62, btnY, "_", 2, theme)}
+${button(width - 42, btnY, "□", 0, theme)}
+${button(width - 22, btnY, "×", 1, theme)}
+${bevel(PAD, wellY, wellW, contentHeight + PAD, theme.bevelDark, theme.bevelLight)}
+<rect x="${PAD + 2}" y="${wellY + 2}" width="${wellW - 4}" height="${contentHeight + PAD - 4}" fill="${theme.card}"/>
 <svg x="${PAD + 2}" y="${wellY + 2}" width="${wellW - 4}" height="${contentHeight + PAD - 4}" overflow="hidden">
 ${body}
 </svg>

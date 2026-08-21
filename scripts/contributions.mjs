@@ -21,14 +21,15 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-import { T, MONO, esc, windowFrame, bareFrame } from "./lib/chrome.mjs";
+import { MONO, esc, windowFrame, bareFrame } from "./lib/chrome.mjs";
+import { PRESETS, presetById, rootFor } from "./lib/presets.mjs";
 import { fetchCalendar, monthMarks } from "./lib/calendar.mjs";
 
 const USER = process.env.GH_USER || "shlok1806";
 const SNK_IN = process.env.SNK_IN || "raw/snake.svg";
-const OUT = process.env.OUT || "dist/contributions.svg";
-/** The same cabinet with no painted window, for surfaces that draw their own. */
-const BARE_OUT = process.env.BARE_OUT || "dist/contributions-bare.svg";
+const OUT_DIR = process.env.OUT_DIR || "dist";
+/** The preset the framed README image wears. */
+const README_PRESET = process.env.README_PRESET || "motif";
 
 /* The tetris opening. */
 /** Rows above the top of snk's canvas a piece is held, so it starts unseen. */
@@ -40,13 +41,7 @@ const PIECE_GAP = 0.09;
 /** Beat between the last piece locking and snk's game beginning. */
 const SETTLE = 0.6;
 
-/* Ours, outside the board: the site's Motif preset, matching chrome.mjs. */
-const EDGE = "#7a7773";
-const EDGE_IN = "#d6d3ce";
-/** Motif draws documents on a white card, and the board is the document. */
-const WELL_BG = "#ffffff";
-/** The NEXT piece wears the ramp's third step, like the board's own cells. */
-const NEXT_PIECE = "#3a49a4";
+
 
 const PAD = 8;
 const LABEL_W = 26;
@@ -76,32 +71,32 @@ function stats(cal) {
   return { score: cal.totalContributions, lines, level };
 }
 
-function plate(x, y, w, h) {
+function plate(x, y, w, h, P) {
   return (
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${WELL_BG}" stroke="${EDGE}" stroke-width="2"/>` +
-    `<rect x="${x + 3.5}" y="${y + 3.5}" width="${w - 7}" height="${h - 7}" rx="1" fill="none" stroke="${EDGE_IN}" stroke-width="1"/>`
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${P.board.well}" stroke="${P.board.edge}" stroke-width="2"/>` +
+    `<rect x="${x + 3.5}" y="${y + 3.5}" width="${w - 7}" height="${h - 7}" rx="1" fill="none" stroke="${P.board.edgeIn}" stroke-width="1"/>`
   );
 }
 
-function statBox(x, y, w, h, label, value) {
+function statBox(x, y, w, h, label, value, P) {
   return (
-    plate(x, y, w, h) +
-    `<text x="${x + w / 2}" y="${y + 14}" font-family="${MONO}" font-size="9" fill="${T.faint}" text-anchor="middle" letter-spacing="1">${esc(label)}</text>` +
-    `<text x="${x + w / 2}" y="${y + h - 8}" font-family="${MONO}" font-size="14" font-weight="bold" fill="${T.accentInk}" text-anchor="middle">${esc(value)}</text>`
+    plate(x, y, w, h, P) +
+    `<text x="${x + w / 2}" y="${y + 14}" font-family="${MONO}" font-size="9" fill="${P.chrome.faint}" text-anchor="middle" letter-spacing="1">${esc(label)}</text>` +
+    `<text x="${x + w / 2}" y="${y + h - 8}" font-family="${MONO}" font-size="14" font-weight="bold" fill="${P.chrome.accentInk}" text-anchor="middle">${esc(value)}</text>`
   );
 }
 
 /** The S-tetromino, sitting in the NEXT window. */
-function nextBox(x, y, w, h) {
+function nextBox(x, y, w, h, P) {
   const u = 6;
   const shape = [[1, 0], [2, 0], [0, 1], [1, 1]];
   const cx = x + w / 2 - (3 * u) / 2;
   const cy = y + h - 8 - u * 2 + 2;
   return (
-    plate(x, y, w, h) +
-    `<text x="${x + w / 2}" y="${y + 14}" font-family="${MONO}" font-size="9" fill="${T.faint}" text-anchor="middle" letter-spacing="1">NEXT</text>` +
+    plate(x, y, w, h, P) +
+    `<text x="${x + w / 2}" y="${y + 14}" font-family="${MONO}" font-size="9" fill="${P.chrome.faint}" text-anchor="middle" letter-spacing="1">NEXT</text>` +
     shape
-      .map(([sx, sy]) => `<rect x="${cx + sx * u}" y="${cy + sy * u}" width="${u - 1}" height="${u - 1}" rx="1" fill="${NEXT_PIECE}"/>`)
+      .map(([sx, sy]) => `<rect x="${cx + sx * u}" y="${cy + sy * u}" width="${u - 1}" height="${u - 1}" rx="1" fill="${P.board.ramp[3]}"/>`)
       .join("")
   );
 }
@@ -228,43 +223,65 @@ const WIDTH = wellX + wellW + PAD + 14;
 
 const monthY = wellY + wellH + 13;
 const hudY = monthY + 8;
+const boxW = Math.floor((wellW - HUD_GAP * 3) / 4);
 const contentHeight = hudY + HUD_H + PAD;
 
 /* Grid coordinates in snk space, mapped onto the page. */
 const gx = (u) => wellX + INSET + (u - vx);
 const gy = (u) => wellY + INSET + (u - vy);
 
-const months = monthMarks(cal.weeks)
-  .map((m) => `<text x="${gx(minX + m.week * pitch)}" y="${monthY}" font-family="${MONO}" font-size="9" fill="${T.faint}">${m.label}</text>`)
-  .join("");
+/**
+ * Everything that varies by desktop preset: our furniture around the board,
+ * and the one `:root` line that redresses snk's own.
+ */
+function dress(P) {
+  const months = monthMarks(cal.weeks)
+    .map((m) => `<text x="${gx(minX + m.week * pitch)}" y="${monthY}" font-family="${MONO}" font-size="9" fill="${P.chrome.faint}">${m.label}</text>`)
+    .join("");
 
-const dayLabels = [[1, "Mon"], [3, "Wed"], [5, "Fri"]]
-  .map(([wd, name]) => `<text x="${wellX - 7}" y="${gy(minY + wd * pitch) + 10}" font-family="${MONO}" font-size="9" fill="${T.faint}" text-anchor="end">${name}</text>`)
-  .join("");
+  const dayLabels = [[1, "Mon"], [3, "Wed"], [5, "Fri"]]
+    .map(([wd, name]) => `<text x="${wellX - 7}" y="${gy(minY + wd * pitch) + 10}" font-family="${MONO}" font-size="9" fill="${P.chrome.faint}" text-anchor="end">${name}</text>`)
+    .join("");
 
-const boxW = Math.floor((wellW - HUD_GAP * 3) / 4);
-const hud =
-  statBox(wellX, hudY, boxW, HUD_H, "SCORE", String(s.score)) +
-  statBox(wellX + (boxW + HUD_GAP), hudY, boxW, HUD_H, "LINES", String(s.lines)) +
-  statBox(wellX + (boxW + HUD_GAP) * 2, hudY, boxW, HUD_H, "LEVEL", String(s.level)) +
-  nextBox(wellX + (boxW + HUD_GAP) * 3, hudY, boxW, HUD_H);
+  const hud =
+    statBox(wellX, hudY, boxW, HUD_H, "SCORE", String(s.score), P) +
+    statBox(wellX + (boxW + HUD_GAP), hudY, boxW, HUD_H, "LINES", String(s.lines), P) +
+    statBox(wellX + (boxW + HUD_GAP) * 2, hudY, boxW, HUD_H, "LEVEL", String(s.level), P) +
+    nextBox(wellX + (boxW + HUD_GAP) * 3, hudY, boxW, HUD_H, P);
+
+  /*
+   * snk rides inside as a nested svg with its original viewBox, so its viewport
+   * does the clipping: a held piece sits above vy and simply is not drawn. Its
+   * palette block is swapped for this preset's on the way in.
+   */
+  const board =
+    `<svg x="${wellX + INSET}" y="${wellY + INSET}" width="${vw}" height="${vh}" viewBox="${vx} ${vy} ${vw} ${vh}">` +
+    `<style>${style.replace(/:root\{[^}]*\}/, rootFor(P))}\n${dropCss.join("\n")}</style>${body}</svg>`;
+
+  return `${plate(wellX, wellY, wellW, wellH, P)}\n${board}\n${months}${dayLabels}${hud}`;
+}
+
+const label = `${USER}@github: ~/contributions`;
+mkdirSync(OUT_DIR, { recursive: true });
+
+/* Framed, for the README, where nothing else supplies a window. */
+const readme = presetById(README_PRESET);
+writeFileSync(
+  `${OUT_DIR}/contributions.svg`,
+  windowFrame({ width: WIDTH, contentHeight, title: label, body: dress(readme), theme: readme.chrome }),
+);
 
 /*
- * snk rides inside as a nested svg with its original viewBox, so its viewport
- * does the clipping: a held piece sits above vy and simply is not drawn.
+ * Chrome-less, one per preset, for the portfolio - it repaints its desktop on
+ * demand and picks the file matching whichever preset it is wearing.
  */
-const board =
-  `<svg x="${wellX + INSET}" y="${wellY + INSET}" width="${vw}" height="${vh}" viewBox="${vx} ${vy} ${vw} ${vh}">` +
-  `<style>${style}\n${dropCss.join("\n")}</style>${body}</svg>`;
-
-const content = `${plate(wellX, wellY, wellW, wellH)}\n${board}\n${months}${dayLabels}${hud}`;
-const label = `${USER}@github: ~/contributions`;
-
-mkdirSync(dirname(OUT), { recursive: true });
-writeFileSync(OUT, windowFrame({ width: WIDTH, contentHeight, title: label, body: content }));
-mkdirSync(dirname(BARE_OUT), { recursive: true });
-writeFileSync(BARE_OUT, bareFrame({ width: WIDTH, contentHeight, label, body: content }));
+for (const P of PRESETS) {
+  writeFileSync(
+    `${OUT_DIR}/contributions-bare-${P.id}.svg`,
+    bareFrame({ width: WIDTH, contentHeight, label, body: dress(P) }),
+  );
+}
 
 console.log(
-  `${OUT} + ${BARE_OUT} - ${animated.length} cells in ${pieces.length} pieces, intro ${intro.toFixed(2)}s, cycle ${(D / 1000).toFixed(1)}s (snk ${cycle}ms)`,
+  `${OUT_DIR}: framed (${readme.id}) + bare x${PRESETS.length} - ${animated.length} cells in ${pieces.length} pieces, intro ${intro.toFixed(2)}s, cycle ${(D / 1000).toFixed(1)}s (snk ${cycle}ms)`,
 );

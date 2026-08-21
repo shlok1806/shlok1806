@@ -27,15 +27,16 @@ jobs:
         with:
           node-version: 20
 
-      # The snake and its board are snk's own; the colors are the portfolio's
-      # Motif preset, passed through snk's official color inputs - a navy ramp
-      # on the white document card, the snake in Motif's red. It lands outside
-      # dist/ so only the finished composite is published.
+      # The snake, its board and its movement are snk's own. Colours are not
+      # passed here: snk publishes every one as a CSS custom property, so the
+      # generator restates that one block per desktop preset and dresses a
+      # single generated snake four ways. It lands outside dist/ so only the
+      # finished composites are published.
       - name: the snake, by Platane/snk
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: raw/snake.svg?color_dots=#e9eaf0,#b9c0e0,#7c88c4,#3a49a4,#000080&color_snake=#b12626
+          outputs: raw/snake.svg
 
       # Splices our tetris opening into snk's loop and wraps it in our chrome.
       - name: the cabinet
