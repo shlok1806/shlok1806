@@ -25,7 +25,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       # The snake, its board and its movement are snk's own. Colours are not
       # passed here: snk publishes every one as a CSS custom property, so the
